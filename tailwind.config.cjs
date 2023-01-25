@@ -9,6 +9,10 @@ module.exports = {
         lg: "976px",
         xl: "1440px",
       },
+      colors: {
+        bg: "#FAF4F0",
+        primary: "#010F8C",
+      },
     },
   },
   plugins: [],
