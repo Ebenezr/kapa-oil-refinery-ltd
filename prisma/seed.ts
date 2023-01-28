@@ -1,6 +1,8 @@
 // const { PrismaClient } = require("@prisma/client");
 // const prisma = new PrismaClient();
 
+// const arr='4,55,65';
+export {};
 // async function seed() {
 //   await prisma.admin.create({
 //     data: {
