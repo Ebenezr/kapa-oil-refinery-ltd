@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="flex h-20 w-full ">
+    <footer className="h-18 flex w-full ">
       {/* wrapper */}
       <div className="align-center flex h-full w-full justify-between px-12">
         <button>

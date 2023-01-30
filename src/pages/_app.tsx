@@ -6,6 +6,7 @@ import { api } from "../utils/api";
 
 import "../styles/globals.css";
 import styles from "../styles/Home.module.css";
+import Layout from "../components/layout";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -14,9 +15,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <>
       <SessionProvider session={session}>
-        <main className={`h-[100vh] bg-bg ${styles.mobileContainer}`}>
+        {/*  */}
+        <Layout>
           <Component {...pageProps} />
-        </main>
+        </Layout>
+        {/* </main> */}
       </SessionProvider>
     </>
   );

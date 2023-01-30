@@ -2,7 +2,7 @@ import React from "react";
 
 const Header = () => {
   return (
-    <header className="h-20 w-full">
+    <header className="h-12 w-full">
       <div className="align-center flex h-full w-full  px-6">
         <button className="">
           <svg
