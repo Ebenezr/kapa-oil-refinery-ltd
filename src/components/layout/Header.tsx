@@ -29,6 +29,7 @@ const Header = () => {
     },
   ];
 
+  // read current path
   useEffect(() => {
     setCurrentRoute(router.pathname);
   }, [router.pathname]);
