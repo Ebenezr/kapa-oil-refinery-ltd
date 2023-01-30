@@ -5,11 +5,25 @@ import { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@mui/material/Button";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-
+import Link from "next/link";
 const useStyles = makeStyles({
   icon: {
     height: "24px",
   },
+});
+
+const product = {
+  name: "Noodle",
+  rating: 4,
+  reviews: 14,
+  price: 55.0,
+  size: "500G",
+  desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, quasi Lorem ipsum dolor sit amet consectetur adipisicing elit.Vel, recusandae ad praesentium quod culpa nemo Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, quasi Lorem ipsum dolor sit amet consectetur adipisicing elit.Vel, recusandae ad praesentium quod culpa nemo",
+};
+
+export const KES = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "KES",
 });
 export default function () {
   const [isReadMore, setIsReadMore] = useState(true);
@@ -19,11 +33,13 @@ export default function () {
     setIsReadMore(!isReadMore);
   };
 
+  // Format the price above to USD using the locale, style, and currency.
+
   return (
     <section className="flex flex-1 flex-col px-6">
       {/* header */}
       <nav className="my-2 flex justify-between">
-        <span className="align-center flex gap-2 ">
+        <Link href="/" className="align-center flex gap-2 ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -39,7 +55,8 @@ export default function () {
             />
           </svg>
           <p className="font-semibold text-primary">Back</p>
-        </span>
+        </Link>
+
         {/* favorite */}
         <span>
           <svg
@@ -60,6 +77,7 @@ export default function () {
       </nav>
       {/* product image */}
       {/* wrapper */}
+
       <div className="mt-4">
         <Carousel
           // autoPlay={true}
@@ -89,7 +107,7 @@ export default function () {
           <span className="flex">
             <Rating
               name="read-only"
-              value={value}
+              value={product.rating}
               precision={0.5}
               readOnly
               icon={
@@ -112,14 +130,18 @@ export default function () {
               }
             />
           </span>
-          <small className="text-neutral-400">(89 reviews)</small>
+          <small className="text-neutral-400">
+            ({product.reviews} reviews)
+          </small>
         </div>
 
-        <p className="mt-2">Size: 500G</p>
-        <p className="mt-3 text-lg font-bold text-primary">KES 55.00</p>
+        <p className="mt-2">Size: {product.size}</p>
+        <p className="mt-3 text-lg font-bold text-primary">
+          {KES.format(product.price)}
+        </p>
         <p className="mt-4 text-lg font-semibold">Descriptions</p>
         <p className="mt-3 leading-5 text-neutral-700">
-          {isReadMore ? prodDesc.slice(0, 150) : prodDesc}
+          {isReadMore ? product.desc.slice(0, 150) : product.desc}
           <button
             onClick={toggleReadMore}
             className="flex w-full cursor-pointer justify-center gap-2 py-4  text-[16px] font-medium leading-4 tracking-wide text-primary "
@@ -176,12 +198,9 @@ export default function () {
           variant="contained"
           style={{ backgroundColor: "#010F8C", color: "#fff" }}
         >
-          Buy Now
+          <Link href="/cart">Buy Now</Link>
         </Button>
       </div>
     </section>
   );
 }
-
-const prodDesc =
-  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, quasi Lorem ipsum dolor sit amet consectetur adipisicing elit.Vel, recusandae ad praesentium quod culpa nemo Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, quasi Lorem ipsum dolor sit amet consectetur adipisicing elit.Vel, recusandae ad praesentium quod culpa nemo";
