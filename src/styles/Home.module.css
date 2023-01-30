@@ -1,15 +1,16 @@
 .mobileContainer {
-  width: 480px;
+  width: 100%;
   margin: 0 auto;
-  min-height: 100vh;
-  min-height: 100dvh;
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 .ipadContainer {
   width: 744px;
   margin: 0 auto;
-    min-height: 100vh;
+  height: 100vh;
   min-height: 100dvh;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }

@@ -2,7 +2,7 @@ import React from "react";
 
 const HomePage = () => {
   return (
-    <section className="flex h-full flex-col">
+    <section className="flex h-full flex-1 flex-col">
       {/* card */}
       <div className="flex flex-col gap-2 py-4">
         <p>What do you want to add to your cart?</p>
@@ -32,7 +32,7 @@ const HomePage = () => {
 
       <div className="mb-6">
         <p className="mb-4 font-semibold">Products</p>
-        <div className="h-72 w-full rounded-lg bg-white shadow-md"></div>
+        <div className="h-52 w-full rounded-lg bg-white shadow-md"></div>
       </div>
     </section>
   );

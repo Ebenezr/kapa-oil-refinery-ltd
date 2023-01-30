@@ -1,3 +1,3 @@
 export default function () {
-  return <section>products</section>;
+  return <section className="flex  flex-1 flex-col">products</section>;
 }
