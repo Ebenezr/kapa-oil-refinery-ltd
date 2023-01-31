@@ -1,7 +1,18 @@
 import Link from "next/link";
 import Button from "@mui/material/Button";
 import LoadingButton from "@mui/lab/LoadingButton";
+import IconButton from "@mui/material/IconButton";
+import Checkbox from "@mui/material/Checkbox";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { useState } from "react";
+
+export const KES = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "KES",
+});
+
 const list = [
   {
     name: "Noodle",
@@ -31,9 +42,14 @@ const list = [
 
 export default function () {
   const [loading, setLoading] = useState(true);
+  const [checked, setChecked] = useState(true);
   function handleClick() {
     setLoading(!loading);
   }
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(event.target.checked);
+  };
   return (
     <section className="flex flex-1 flex-col px-6">
       {/* header */}
@@ -74,7 +90,51 @@ export default function () {
         </span>
       </nav>
       {/* items */}
-      <div className="flex-1"></div>
+      {list.map((item) => (
+        <div className="my-3 w-full flex-1  py-2">
+          <div className="align-center flex w-full py-4">
+            <div className="grid place-items-center  ">
+              <Checkbox
+                className=" my-auto"
+                color="primary"
+                checked={checked}
+                onChange={handleChange}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+            </div>
+            <div className="relative  grid h-20 w-5/6 grid-cols-3  rounded-lg bg-white shadow-lg">
+              {/* image  */}
+              <div className="h-full bg-green-300"></div>
+              {/* prod desc */}
+              <div className="grid grid-rows-3 justify-center text-center">
+                <p className="text-lg font-semibold">{item.name}</p>
+                <small className="text-neutral-400">Size:{item.size}</small>
+                <p className="text-primary"> {KES.format(item.price)}</p>
+              </div>
+              {/* quantity */}
+              <div className="align-center flex h-full w-full flex-col justify-center px-2">
+                <div className=" grid h-1/2 w-full grid-cols-3 overflow-hidden rounded-full  border-2 border-primary px-2 ">
+                  <IconButton aria-label="minus">
+                    <RemoveIcon />
+                  </IconButton>
+                  <input type="text" className="h-full" disabled />
+                  <IconButton aria-label="add">
+                    <AddIcon />
+                  </IconButton>
+                </div>
+              </div>
+              {/*  */}
+              {/* delete item */}
+              <IconButton
+                aria-label="add"
+                className="absolute right-0 top-0 -translate-y-1/2  translate-x-1/2 "
+              >
+                <CancelIcon />
+              </IconButton>
+            </div>
+          </div>
+        </div>
+      ))}
 
       {/* totals */}
       {/* promo code */}
