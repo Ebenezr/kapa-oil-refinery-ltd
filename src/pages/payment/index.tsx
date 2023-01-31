@@ -1,39 +1,38 @@
+import LoadingButton from "@mui/lab/LoadingButton";
+import { useState } from "react";
 import Link from "next/link";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import InputAdornment from "@mui/material/InputAdornment";
-import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
 import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
-import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import LoadingButton from "@mui/lab/LoadingButton";
-import { useState } from "react";
+import Divider from "@mui/material/Divider";
 
+const currencies = [
+  {
+    value: "G4S",
+    label: "G4S",
+  },
+  {
+    value: "4NK",
+    label: "4NK",
+  },
+  {
+    value: "Door Dash",
+    label: "Door Dash",
+  },
+];
 export default function () {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   function handleClick() {
     setLoading(!loading);
   }
-  const currencies = [
-    {
-      value: "G4S",
-      label: "G4S",
-    },
-    {
-      value: "4NK",
-      label: "4NK",
-    },
-    {
-      value: "Door Dash",
-      label: "Door Dash",
-    },
-  ];
   return (
     <section className="flex flex-1 flex-col px-6">
       {/* header */}
       <nav className="my-2 flex justify-between">
-        <Link href="/products" className="align-center flex gap-2 ">
+        <Link href="/order" className="align-center flex gap-2 ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -68,36 +67,37 @@ export default function () {
           </svg>
         </span>
       </nav>
-      {/* your details */}
-      <div className="mt-12 w-full">
-        <p className="text-lg font-semibold">Your Details</p>
+      {/* 1st section */}
+
+      <TextField
+        className=" my-3 w-full"
+        id="filled-select-currency"
+        select
+        placeholder="Choose payment option"
+        value="MPesa on Delivery"
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <PaymentsOutlinedIcon />
+            </InputAdornment>
+          ),
+        }}
+        variant="outlined"
+      >
+        {currencies.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
+      </TextField>
+      {/*  */}
+      <div className="width-full my-3  rounded-lg border-[0.5pt] border-neutral-300 px-4 py-3">
+        <p>M-Pesa</p>
+        <small>Enter your M-Pesa account details</small>
         <TextField
           className=" mt-3 w-full"
           id="input-with-icon-textfield"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <LocationOnOutlinedIcon />
-              </InputAdornment>
-            ),
-          }}
-          variant="standard"
-        />
-        <TextField
-          className=" mt-3 w-full"
-          id="input-with-icon-textfield"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <MailOutlineIcon />
-              </InputAdornment>
-            ),
-          }}
-          variant="standard"
-        />
-        <TextField
-          className=" mt-3 w-full"
-          id="input-with-icon-textfield"
+          placeholder="Mobile Number"
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -107,54 +107,36 @@ export default function () {
           }}
           variant="standard"
         />
-      </div>
-      {/* about order */}
-      <div className="mt-12 w-full flex-1">
-        <p className="text-lg font-semibold">About Order</p>
-
         <TextField
           className=" mt-3 w-full"
-          id="filled-select-currency"
-          select
-          label="Distributor"
+          id="input-with-icon-textfield"
+          placeholder="Email Address"
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <LocalShippingOutlinedIcon />
+                <MailOutlineIcon />
               </InputAdornment>
             ),
           }}
-          helperText="Please select your distributor"
           variant="standard"
-        >
-          {currencies.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          className="mt-3 w-full"
-          id="filled-select-currency"
-          select
-          label="Payment"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <PaymentsOutlinedIcon />
-              </InputAdornment>
-            ),
-          }}
-          helperText="Please select your payment method"
-          variant="standard"
-        >
-          {currencies.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
+        />
       </div>
+      <div className="flex-1"></div>
+      <div className="my-3 flex flex-col justify-center text-center">
+        <small>Available payment methods 🔒</small>
+        {/* icons */}
+        <div className="mt-3 mb-4 flex justify-center gap-3">
+          <span>Mpesa</span>
+          <span>VISA</span>
+          <span>Master card</span>
+        </div>
+        <Divider />
+        <div className="flex justify-between px-4 py-2 text-neutral-500">
+          <p>Total(Inc.VAT)</p>
+          <p>KES 345.00</p>
+        </div>
+      </div>
+
       <LoadingButton
         className="rounded-full"
         style={{ backgroundColor: "#010F8C", color: "#fff" }}
