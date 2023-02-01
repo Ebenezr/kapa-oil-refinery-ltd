@@ -58,17 +58,21 @@ model User {
     addresses     Address[]
     accounts      Account[]
     sessions      Session[]
+    createdAt     DateTime  @default(now())
+    updatedAt     DateTime  @updatedAt
 }
 
 model Address {
-    id      String @id @default(cuid())
-    line1   String
-    line2   String
-    county  String
-    town    String
-    station String
-    userId  String
-    user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    id        String   @id @default(cuid())
+    line1     String
+    line2     String
+    county    String
+    town      String
+    station   String
+    userId    String
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model VerificationToken {
@@ -77,13 +81,6 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
-}
-
-model Review {
-    id            String          @id @default(cuid())
-    text          String
-    rating        Int
-    ProductReview ProductReview[]
 }
 
 model Product {
@@ -96,19 +93,21 @@ model Product {
     category    ProductCategory @relation(fields: [categoryId], references: [id])
     categoryId  Int
     review      ProductReview[]
-    reviewId    Int
     discount    ProductDiscount @relation(fields: [discountId], references: [id])
     discountId  Int
+    createdAt   DateTime        @default(now())
+    updatedAt   DateTime        @updatedAt
 }
 
 model ProductReview {
-    id        Int     @id @default(autoincrement())
-    product   Product @relation(fields: [productId], references: [id])
+    id        Int      @id @default(autoincrement())
+    product   Product  @relation(fields: [productId], references: [id])
     productId Int
     rating    Int?
     decs      String?
-    Review    Review? @relation(fields: [reviewId], references: [id])
     reviewId  String?
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model ProductCategory {
@@ -131,6 +130,7 @@ model ProductDiscount {
     name                String
     percentage_discount Decimal
     active              Boolean
+    code                String
     createdAt           DateTime  @default(now())
     updatedAt           DateTime  @updatedAt
     Product             Product[]
