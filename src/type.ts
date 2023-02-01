@@ -7,7 +7,7 @@ export type Product = {
   size: string;
   reviews: [] | null;
   categoryId: number;
-  discountId: number;
+  discountId: number | null;
   createdAt: Date;
   updatedAt: Date;
 };
