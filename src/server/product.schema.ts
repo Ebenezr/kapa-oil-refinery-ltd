@@ -19,17 +19,12 @@ export const ProductReviewSchema = z.object({
   id: z.number().positive(),
   productId: z.number().positive(),
   rating: z.number(),
-  decs: z.string(),
-  reviewId: z.number().positive(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  description: z.string(),
 });
 
 export const ProductInventorySchema = z.object({
   id: z.number().positive(),
   quantity: z.number().positive(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
 });
 
 export const ProductDiscountSchema = z.object({
@@ -38,8 +33,6 @@ export const ProductDiscountSchema = z.object({
   percentage_discount: z.number(),
   active: z.boolean(),
   code: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
 });
 
 export const filterQuery = z.object({
@@ -48,14 +41,10 @@ export const filterQuery = z.object({
 });
 
 export type FilterQueryInput = z.TypeOf<typeof filterQuery>;
-export type CreateProduct = z.TypeOf<typeof ProductSchema>;
-export type CreateProductCategorySchema = z.TypeOf<
-  typeof ProductCategorySchema
->;
-export type CreateProductReviewSchema = z.TypeOf<typeof ProductReviewSchema>;
-export type CreateProductInventorySchema = z.TypeOf<
+export type CreateProductInput = z.TypeOf<typeof ProductSchema>;
+export type CreateProductCategoryInput = z.TypeOf<typeof ProductCategorySchema>;
+export type CreateProductReviewInput = z.TypeOf<typeof ProductReviewSchema>;
+export type CreateProductInventoryInput = z.TypeOf<
   typeof ProductInventorySchema
 >;
-export type CreateProductDiscountSchema = z.TypeOf<
-  typeof ProductDiscountSchema
->;
+export type CreateProductDiscountInput = z.TypeOf<typeof ProductDiscountSchema>;

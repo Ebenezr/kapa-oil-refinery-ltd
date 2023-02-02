@@ -24,8 +24,7 @@ export type ProductReview = {
   id: number;
   productId: number;
   rating: number;
-  decs: string;
-  reviewId: number;
+  description: string;
   createdAt: Date;
   updatedAt: Date;
 };
