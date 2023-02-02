@@ -1,23 +1,18 @@
 import * as z from "zod";
 
 export const ProductSchema = z.object({
-  id: z.number(),
   name: z.string({ required_error: "Name is required" }),
-  description: z.string().optional(),
+  description: z.string(),
   price: z.number({ required_error: "Price is required" }).positive(),
-  image_url: z.string().optional(),
+  image_url: z.string(),
   size: z.string({ required_error: "Size is required" }),
   categoryId: z.number(),
-  discountId: z.number().optional(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  discountId: z.number(),
 });
 
 export const ProductCategorySchema = z.object({
   id: z.number().positive(),
   name: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
 });
 
 export const ProductReviewSchema = z.object({
