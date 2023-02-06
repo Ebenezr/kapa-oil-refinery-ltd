@@ -25,6 +25,7 @@ export const createProductController = async ({
         description: input.description,
         price: input.price,
         size: input.size,
+        inventory: input.inventory,
         categoryId: input.categoryId,
         discountId: input.discountId,
         image_url: input.image_url,
@@ -92,8 +93,8 @@ export const createProductReviewController = async ({
     const productReview = await prisma.productReview.create({
       data: {
         productId: input.productId,
-        rating: input.rating,
         description: input.description,
+        rating: input.rating,
       },
     });
 

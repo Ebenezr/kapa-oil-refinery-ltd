@@ -5,10 +5,15 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "postinstall": "prisma generate",
+    "db:migrate": "npx prisma migrate dev --name note-entity --create-only && npx prisma generate",
+    "postinstall": "prisma db push && prisma generate",
+    "db:push": "npx prisma db push",
     "lint": "next lint",
     "start": "next start"
+  },  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   },
+
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -30,7 +35,7 @@
     "react-currency-format": "^1.1.0",
     "react-dom": "18.2.0",
     "react-responsive-carousel": "^3.2.23",
-    "superjson": "1.9.1",
+    "superjson": "^1.12.2",
     "zod": "^3.20.2"
   },
   "devDependencies": {
