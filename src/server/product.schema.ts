@@ -4,7 +4,7 @@ export const createProductSchema = z.object({
   name: z.string({ required_error: "Name is required" }),
   description: z.string(),
   price: z.number({ required_error: "Price is required" }).positive(),
-  inventory: z.number(),
+  rating: z.number(),
   image_url: z.string(),
   size: z.string({ required_error: "Size is required" }),
   categoryId: z.number(),
@@ -12,12 +12,31 @@ export const createProductSchema = z.object({
 });
 
 export const createProductCategorySchema = z.object({
-  id: z.number().positive(),
   name: z.string(),
+  code: z.string(),
+  products: z.array(
+    z.object({
+      name: z.string(),
+      description: z.string(),
+      price: z.number().positive(),
+      image_url: z.string(),
+      size: z.string(),
+      rating: z.number().min(0).max(5),
+      ProductInventory: z.object({
+        quantity: z.number(),
+      }),
+      ProductReview: z.array(
+        z.object({
+          userId: z.number().positive(),
+          rating: z.number(),
+          description: z.string(),
+        })
+      ),
+    })
+  ),
 });
 
 export const createProductReviewSchema = z.object({
-  id: z.number().positive(),
   productId: z.number().positive(),
   rating: z.number(),
   description: z.string(),

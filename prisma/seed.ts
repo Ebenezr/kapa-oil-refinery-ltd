@@ -2,105 +2,117 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function seed() {
-  await prisma.user.create({
-    data: {
+  const john = await prisma.user.upsert({
+    where: { email: "john@prisma.io" },
+    update: {},
+    create: {
       name: "John Doe",
       phone: "123-456-7890",
-      email: "user1@mail.com",
+      email: "john@mail.com",
       image: "https://api.realworld.io/images/smiley-cyrus.jpeg",
+
+      addresses: {
+        create: {
+          line1: "0745554566",
+          line2: "0715515155",
+          county: "Trans-nzoia",
+          town: "Kitale",
+          station: "G4S",
+        },
+      },
     },
   });
-
-  await prisma.user.create({
-    data: {
+  const bob = await prisma.user.upsert({
+    where: { email: "mercy@prisma.io" },
+    update: {},
+    create: {
       name: "Mercy Grace",
       phone: "123-456-7890",
-      email: "user2@mail.com",
+      email: "mercy@mail.com",
       image: "https://api.realworld.io/images/smiley-cyrus.jpeg",
+
+      addresses: {
+        create: {
+          line1: "0745554566",
+          line2: "0715515155",
+          county: "Trans-nzoia",
+          town: "Kitale",
+          station: "G4S",
+        },
+      },
     },
   });
 
-  await prisma.address.create({
+  await prisma.productCategory.create({
     data: {
-      line1: "0745554566",
-      line2: "0715515155",
-      county: "Trans-nzoia",
-      town: "Kitale",
-      station: "G4S",
-      userId: 1,
+      name: "Cooking Fat",
+      products: [
+        {
+          name: "Kasuku",
+          description: "cooking fat",
+          price: 799.99,
+          image_url: "https://example.com/smartphone.jpg",
+          size: "10KG",
+          rating: 3.5,
+        },
+      ],
     },
   });
-
-  await prisma.address.create({
-    data: {
-      line1: "0745554566",
-      line2: "0715515155",
-      county: "Nairobi",
-      town: "Thika",
-      station: "G4S",
-      userId: 2,
-    },
-  });
-
-  const products = [
-    {
-      name: "Rina",
-      description: "sweet vegetable oil",
-      price: 999.99,
-      image_url: "https://example.com/laptop.jpg",
-      size: "5L",
-      inventory: 45,
-      categoryId: 2,
-      discountId: 1,
-      rating: 3.5,
-    },
-    {
-      name: "Kasuku",
-      description: "cooking fat",
-      price: 799.99,
-      image_url: "https://example.com/smartphone.jpg",
-      size: "10KG",
-      inventory: 4,
-      categoryId: 1,
-      discountId: 2,
-      rating: 3.5,
-    },
-    {
-      name: "Nuni",
-      description: "Chicken flavor",
-      price: 29.99,
-      image_url: "https://example.com/tablet.jpg",
-      size: "500G",
-      categoryId: 3,
-      inventory: 455,
-      discountId: 3,
-    },
-  ];
-
-  for (const product of products) {
-    await prisma.product.create({
-      data: product,
-    });
-  }
 
   const cat = [
     {
       name: "Cooking Fat",
+      products: {
+        create: {
+          name: "Kasuku",
+          description: "cooking fat",
+          price: 799.99,
+          image_url: "https://example.com/smartphone.jpg",
+          size: "10KG",
+          rating: 3.5,
+          ProductReview: {
+            create: {
+              user: {
+                connect: { email: "john@prisma.io" },
+              },
+              rating: 5,
+              description: "This is an excellent product. Highly recommended!",
+            },
+          },
+          ProductInventory: {
+            create: {
+              quantity: 345,
+            },
+          },
+        },
+      },
     },
     {
       name: "Vegateble Oil",
-    },
-    {
-      name: "Noodles",
-    },
-    {
-      name: "Margarine",
-    },
-    {
-      name: "Personal Care",
-    },
-    {
-      name: "Baking Powder",
+      products: {
+        create: {
+          name: "Rina",
+          description: "sweet vegetable oil",
+          price: 999.99,
+          image_url: "https://example.com/laptop.jpg",
+          size: "5L",
+          rating: 3.5,
+          ProductInventory: {
+            create: {
+              quantity: 345,
+            },
+          },
+          ProductReview: {
+            create: {
+              user: {
+                connect: { email: "john@prisma.io" },
+              },
+              rating: 5,
+              description: "This is an excellent product. Highly recommended!",
+            },
+          },
+        },
+      },
     },
   ];
 
@@ -110,53 +122,13 @@ async function seed() {
     });
   }
 
-  const review = [
-    {
-      userId: 1,
-      productId: 1,
-      rating: 5,
-      description: "This is an excellent product. Highly recommended!",
-    },
-    {
-      userId: 2,
-      productId: 2,
-      rating: 3.5,
-      description: "This is an excellent product. Highly recommended!",
-    },
-    {
-      userId: 1,
-      productId: 2,
-      rating: 1,
-      description: "This is not an excellent product.",
-    },
-    {
-      userId: 1,
-      productId: 1,
-      rating: 5,
-      description: "This is an excellent product. Highly recommended!",
-    },
-    {
-      userId: 1,
-      productId: 3,
-      rating: 4.5,
-      description: "This is an excellent product. Highly recommended!",
-    },
-    {
-      userId: 2,
-      productId: 1,
-      rating: 5,
-      description: "This is an excellent product. Highly recommended!",
-    },
-  ];
-
-  for (const product of review) {
-    await prisma.productReview.create({
-      data: product,
-    });
-  }
+  console.log({ john, bob });
 }
 
 seed()
+  .then(async () => {
+    await prisma.$disconnect();
+  })
   .catch((e) => {
     console.error(e);
     process.exit(1);

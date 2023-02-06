@@ -116,6 +116,7 @@ model ProductReview {
 model ProductCategory {
     id        Int       @id @default(autoincrement())
     name      String
+    code      String    @unique
     products  Product[]
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
